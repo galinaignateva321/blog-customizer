@@ -30,17 +30,6 @@ export const ArticleParamsForm = ({
 	const rootRef = useRef<HTMLElement>(null);
 	const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
 
-	const formOpenHandler = () => {
-		setIsOpenForm(!isOpenForm);
-	};
-
-	useOutsideClickClose({
-		isOpen: isOpenForm,
-		rootRef,
-		onClose: formOpenHandler,
-		onChange: setIsOpenForm,
-	});
-
 	const [newFontColor, setNewFontColor] = useState(
 		currentArticleState.fontColor
 	);
@@ -60,6 +49,19 @@ export const ArticleParamsForm = ({
 	const [newContentWidth, setNewContentWidth] = useState(
 		currentArticleState.contentWidth
 	);
+
+	//открытие формы при нажатии на стрелку
+	const formOpenHandler = () => {
+		setIsOpenForm((prevIsOpen) => !prevIsOpen);
+	};
+
+	//хук закрытия формы при клике по оверлею
+	useOutsideClickClose({
+		isOpen: isOpenForm,
+		rootRef,
+		onClose: formOpenHandler,
+		onChange: setIsOpenForm,
+	});
 
 	//сабмит формы
 	const formSubmitHandler = (e: SyntheticEvent) => {
