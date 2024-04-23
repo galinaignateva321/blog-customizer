@@ -1,6 +1,11 @@
+import { FormEvent, useRef, useState } from 'react';
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
-
+import { Select } from '../select';
+import { RadioGroup } from '../radio-group';
+import { Text } from '../text';
+import { Separator } from '../separator';
+import clsx from 'clsx';
 import styles from './ArticleParamsForm.module.scss';
 import {
 	ArticleStateType,
@@ -11,17 +16,11 @@ import {
 	contentWidthArr,
 	defaultArticleState,
 } from 'src/constants/articleProps';
-import { SyntheticEvent, useRef, useState } from 'react';
 import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
-import clsx from 'clsx';
-import { Select } from '../select';
-import { RadioGroup } from '../radio-group';
-import { Text } from '../text';
-import { Separator } from '../separator';
 
 type ArticleParamsFormProps = {
 	currentArticleState: ArticleStateType;
-	setCurrentArticleState: (param: any) => void;
+	setCurrentArticleState: (param: ArticleStateType) => void;
 };
 export const ArticleParamsForm = ({
 	currentArticleState,
@@ -64,7 +63,7 @@ export const ArticleParamsForm = ({
 	});
 
 	//сабмит формы
-	const formSubmitHandler = (e: SyntheticEvent) => {
+	const formSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setCurrentArticleState({
 			...currentArticleState,
@@ -79,12 +78,7 @@ export const ArticleParamsForm = ({
 	//ресет формы
 	const formResetHandler = () => {
 		setCurrentArticleState({
-			...currentArticleState,
-			fontFamilyOption: defaultArticleState,
-			fontColor: defaultArticleState,
-			backgroundColor: defaultArticleState,
-			contentWidth: defaultArticleState,
-			fontSizeOption: defaultArticleState,
+			...defaultArticleState,
 		});
 		setNewFontFamily(defaultArticleState.fontFamilyOption);
 		setNewFontColor(defaultArticleState.fontColor);
